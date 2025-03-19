@@ -8,7 +8,7 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
     console.log('Form submitted with data:', { name, email, age });
 
     try {
-        const response = await fetch('http://localhost:5000/api/users', {
+        const response = await fetch('http://backend_host:5000/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

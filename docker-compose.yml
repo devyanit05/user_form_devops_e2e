@@ -3,17 +3,27 @@ version: '3.8'
 services:
   backend:
     build: ./backend
+    hostname: backend_host
     ports:
       - "5000:5000"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/devops
+      - MONGO_URI=mongodb://mongo:27017/devops_node
     depends_on:
       - mongo
+    networks:
+      - user-network
 
   frontend:
     build: ./frontend
+    hostname: frontend_host
+    environment:
+      - BACKEND_URL=http://backend_host/api/users
     ports:
       - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - user-network
 
   mongo:
     image: mongo:latest
@@ -21,6 +31,10 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-
+    networks:
+      - user-network
 volumes:
   mongo-data:
+
+networks:
+  user-network: {}
