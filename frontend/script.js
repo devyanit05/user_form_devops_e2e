@@ -1,3 +1,6 @@
+const backendUrl = window?.env?.BACKEND_URL || 'http://localhost:5000';
+
+// submit form data to backend
 document.getElementById('userForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -8,7 +11,7 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
     console.log('Form submitted with data:', { name, email, age });
 
     try {
-        const response = await fetch('http://backend_host:5000/api/users', {
+        const response = await fetch(`${backendUrl}/api/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,14 +36,14 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
 // fetch all user on clicking view all users button
 document.getElementById('viewUsers').addEventListener('click', async () => {
     try {
-        const response = await fetch('http://backend_host:5000/api/users');
+        const response = await fetch(`${backendUrl}/api/users`);
         const data = await response.json();
         console.log('All users:', data);
 
         if (response.ok) {
             const userTableBody = document.querySelector('#userTable tbody');
 
-            userTableBody.innerHTML = ''; // Clear previous list
+            userTableBody.innerHTML = '';
             data.forEach(user => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${user.name}</td><td>${user.email}</td><td>${user.age}</td>`;

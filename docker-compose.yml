@@ -1,4 +1,4 @@
-version: '3.8'
+version: '4.0.1'
 
 services:
   backend:
@@ -17,7 +17,7 @@ services:
     build: ./frontend
     hostname: frontend_host
     environment:
-      - BACKEND_URL=http://backend_host/api/users
+      - BACKEND_URL=http://localhost:5000/api/users
     ports:
       - "80:80"
     depends_on:
