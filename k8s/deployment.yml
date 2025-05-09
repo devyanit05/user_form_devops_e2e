@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-form-e2e-devops
+  # namespace: user-form-e2e-devops
+spec:
+  selector:
+    matchLabels:
+      app: user-form-e2e-devops
+  template:
+    metadata:
+      labels:
+        app: user-form-e2e-devops
+    spec:
+      containers:
+      - name: user-form-e2e-devops-frontend
+        image: docker.io/devyanit05/user_form_devops_e2e_frontend:latest   
+        ports: 
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+
+      - name: user-form-e2e-devops-backend
+        image: docker.io/devyanit05/user_form_devops_e2e_backend:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MONGO_URL
+          value: "mongodb://localhost:27017/userformdb"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+
+      - name: mongodb
+        image: mongo:6.0
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 27017
+        env:
+          - name: MONGO_INITDB_DATABASE
+            value: "userformdb"
