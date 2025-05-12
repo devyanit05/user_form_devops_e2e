@@ -8,6 +8,6 @@ spec:
   ports:
   - name: frontend-port
     protocol: TCP
-    port: 80 #external port
+    port: 5000 #external port
     targetPort: 80 #container port for frontend
   type: ClusterIP
