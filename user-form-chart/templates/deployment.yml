@@ -2,11 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata: 
   name: user-form-e2e-devops
+  labels:
+    dev: {{ .Values.dev }}
   # namespace: user-form-e2e-devops
 spec:
   selector:
     matchLabels:
       app: user-form-e2e-devops
+  replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
